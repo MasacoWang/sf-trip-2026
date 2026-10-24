@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>舊金山 4 天行程</title>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--cp-bg); color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  font-size: 15px; line-height: 1.5;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+a { color: var(--cp-link); }
+header { padding: 20px 16px 8px; max-width: 720px; margin: 0 auto; }
+header h1 { margin: 0; font-size: 22px; }
+header p { margin: 4px 0 0; color: var(--cp-text-muted); font-size: 13px; }
+nav {
+  position: sticky; top: 0; z-index: 10; background: var(--cp-overlay);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cp-border);
+}
+.tabs { display: flex; gap: 6px; overflow-x: auto; padding: 8px 12px; max-width: 720px; margin: 0 auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto; border: 1px solid var(--cp-border); background: var(--cp-surface); color: var(--cp-text);
+  border-radius: 0.625rem; padding: 6px 12px; font: inherit; font-size: 13px; cursor: pointer; white-space: nowrap;
+}
+.tab b { display: block; font-size: 14px; }
+.tab.active { background: var(--cp-accent); border-color: var(--cp-accent); color: var(--cp-accent-fg); }
+main { max-width: 720px; margin: 0 auto; padding: 12px; }
+.card {
+  background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+  padding: 14px; margin-bottom: 12px;
+}
+.day-head h2 { margin: 0; font-size: 19px; }
+.day-head .sub { color: var(--cp-text-muted); font-size: 13px; margin-top: 2px; }
+.alert {
+  border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft);
+  border-radius: 0.625rem; padding: 10px 12px; margin-top: 10px; font-size: 13.5px;
+}
+.alert.tip { border-left-color: var(--cp-accent); background: var(--cp-accent-soft); }
+.timeline { position: relative; margin-left: 6px; padding-left: 16px; border-left: 2px solid var(--cp-border); }
+.item { position: relative; margin-bottom: 12px; }
+.item::before {
+  content: ""; position: absolute; left: -23px; top: 18px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--cp-surface); border: 2px solid var(--cp-border-strong);
+}
+.item.star::before { border-color: var(--cp-accent); background: var(--cp-accent); }
+.item.now .card { border-color: var(--cp-accent); box-shadow: 0 0 0 2px var(--cp-highlight); }
+.item .card { margin-bottom: 0; }
+.time { font-weight: 700; color: var(--cp-accent); font-size: 14px; }
+.title { font-size: 16.5px; font-weight: 600; margin: 2px 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.chip {
+  font-size: 12.5px; background: var(--cp-surface-soft); border: 1px solid var(--cp-border);
+  border-radius: 999px; padding: 2px 9px; color: var(--cp-text-soft);
+}
+.note { color: var(--cp-text-muted); font-size: 13.5px; }
+.changed { font-size: 13px; margin-top: 6px; padding: 6px 10px; border-radius: 0.625rem; background: var(--cp-accent-soft); }
+.changed b { color: var(--cp-accent); }
+.btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px; text-decoration: none; font-size: 13px;
+  border-radius: 0.625rem; padding: 7px 11px; border: 1px solid var(--cp-border);
+  color: var(--cp-text); background: var(--cp-bg-elevated); min-height: 36px;
+}
+.btn.primary { background: var(--cp-accent); border-color: var(--cp-accent); color: var(--cp-accent-fg); }
+.src { font-size: 12px; color: var(--cp-text-soft); margin-top: 6px; }
+.src a { margin-right: 8px; }
+.hidden { display: none !important; }
+ul.tips { padding-left: 18px; margin: 6px 0 0; }
+ul.tips li { margin-bottom: 6px; }
+footer { text-align: center; color: var(--cp-text-soft); font-size: 12px; padding: 16px; }
+.sf-clock { font-size: 12.5px; color: var(--cp-text-muted); margin-top: 6px; }
+
+/* ===== TA Hub palette + mobile-first reading mode ===== */
+body { background: var(--cp-surface); font-size: 16px; line-height: 1.6; }
+html[data-theme="dark"] body { background: var(--cp-bg-elevated); }
+header { border-top: 4px solid #f48fb1; padding: 16px 16px 10px; }
+header h1 { font-size: 24px; line-height: 1.2; }
+.eyebrow { margin: 0 0 4px; color: #c2185b; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+nav { padding-top: env(safe-area-inset-top); }
+.tab { --tab-color: var(--cp-accent); border: 2px solid var(--tab-color); font-weight: 700; color: #4a4a4a; padding: 8px 14px; min-height: 48px; }
+.tab:hover { background: color-mix(in srgb, var(--tab-color) 12%, var(--cp-surface)); }
+.tab.active { background: var(--tab-color); border-color: var(--tab-color); color: #ffffff; box-shadow: 0 3px 10px color-mix(in srgb, var(--tab-color) 35%, transparent); font-weight: 800; }
+.tab[data-id="d1"], #d1 { --tab-color: #f48fb1; --day-color: #f48fb1; }
+.tab[data-id="d2"], #d2 { --tab-color: #90c8f0; --day-color: #90c8f0; }
+.tab[data-id="d3"], #d3 { --tab-color: #a5d6a7; --day-color: #a5d6a7; }
+.tab[data-id="d4"], #d4 { --tab-color: #ffcc99; --day-color: #ffcc99; }
+.tab[data-id="tips"], #tips { --tab-color: #c8b6e2; --day-color: #c8b6e2; }
+.day-head { border-top: 4px solid var(--day-color); background: color-mix(in srgb, var(--day-color) 16%, var(--cp-surface)); }
+.day-head h2 { font-size: 21px; }
+.timeline { border-left-color: color-mix(in srgb, var(--day-color) 70%, var(--cp-border)); }
+.item::before { border-color: var(--day-color); }
+.item.star::before { border-color: var(--cp-accent); background: var(--cp-accent); }
+.title { font-size: 18px; line-height: 1.35; }
+.time { font-size: 15px; }
+.note, .alert { font-size: 15px; }
+.chip { font-size: 14px; padding: 3px 10px; }
+.changed { font-size: 14px; }
+.btns { gap: 8px; }
+.btn { min-height: 44px; padding: 9px 14px; font-size: 15px; border-width: 2px; }
+.btn.primary { background: color-mix(in srgb, var(--day-color, #80cbc4) 30%, var(--cp-surface)); border-color: var(--day-color, #80cbc4); color: var(--cp-text); font-weight: 700; }
+.btn:hover { background: color-mix(in srgb, var(--day-color, #80cbc4) 14%, var(--cp-surface)); }
+.src { font-size: 13px; }
+.src a { display: inline-block; padding: 4px 0; }
+.tab[data-id="eats"], #eats { --tab-color: #80cbc4; --day-color: #80cbc4; }
+.jump { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.jump a { text-decoration: none; color: #4a4a4a; font-weight: 700; font-size: 14px; border: 2px solid var(--c); border-radius: 0.625rem; padding: 6px 12px; background: var(--cp-surface); }
+.eat-day { margin: 18px 0 8px; scroll-margin-top: 80px; }
+.eat-day-head { border-left: 6px solid var(--day-color); padding: 4px 12px; margin-bottom: 8px; }
+.eat-day-head b { display: block; font-size: 18px; }
+.eat-day-head span { color: var(--cp-text-muted); font-size: 14px; }
+.eat-meal { border-top: 3px solid var(--day-color); }
+.eat-meal-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+.eat-meal-head b { font-size: 17px; }
+ul.eat-list { list-style: none; margin: 0; padding: 0; }
+ul.eat-list li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--cp-border); }
+ul.eat-list li:first-child { border-top: 0; }
+ul.eat-list li.on { background: color-mix(in srgb, var(--day-color) 14%, var(--cp-surface)); border-radius: 0.625rem; padding: 10px 8px; }
+.eat-info { flex: 1; min-width: 0; }
+.eat-name { display: block; font-weight: 700; font-size: 16px; color: var(--cp-text); text-decoration: none; }
+.eat-type { display: inline-block; font-size: 12.5px; color: #c2185b; font-weight: 700; margin-right: 6px; }
+.eat-why { font-size: 14px; color: var(--cp-text-muted); }
+.eat-btns { display: flex; gap: 6px; flex: 0 0 auto; }
+.eat-btns .btn { min-width: 44px; justify-content: center; padding: 8px 10px; }
+@media (min-width: 900px) { #eats .eat-day { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 12px; } #eats .eat-day-head { grid-column: 1 / -1; } #eats .eat-meal { margin-bottom: 0; } }
+ol.steps { margin: 8px 0; padding: 8px 12px 8px 30px; background: color-mix(in srgb, var(--day-color) 14%, var(--cp-surface)); border-radius: 0.625rem; font-size: 15px; }
+ol.steps li { margin: 3px 0; }
+details.route { margin-top: 10px; border: 2px solid var(--day-color); border-radius: 0.625rem; padding: 8px 12px; background: var(--cp-surface); }
+details.route summary { font-weight: 800; cursor: pointer; }
+.route-list { display: flex; flex-direction: column; margin-top: 6px; font-size: 15px; }
+.route-list span::before { content: "→ "; color: #c2185b; font-weight: 800; }
+.route-list span:first-child::before { content: ""; }
+ul.shop { list-style: none; padding: 0; margin: 8px 0; display: grid; gap: 6px; }
+ul.shop li { background: color-mix(in srgb, var(--day-color) 16%, var(--cp-surface)); border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 8px 12px; }
+ul.shop a { color: var(--cp-text); text-decoration: none; }
+ul.shop span { display: block; color: var(--cp-text-muted); font-size: 14px; }
+.to-top { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 48px; height: 48px; border-radius: 50%;
+  border: 2px solid var(--cp-accent); background: var(--cp-surface); color: var(--cp-text); font-size: 20px; box-shadow: 0 3px 10px var(--cp-highlight); display: none; z-index: 20; }
+.to-top.show { display: block; }
+
+/* Phone: stack map buttons in pairs, full width */
+@media (max-width: 600px) {
+  .tabs { display: grid; grid-template-columns: repeat(3, 1fr); overflow: visible; gap: 6px; padding: 8px 10px; }
+  .tab { padding: 6px 4px; min-height: 52px; font-size: 12px; text-align: center; white-space: normal; line-height: 1.25; }
+  .tab b { font-size: 14px; }
+  main { padding: 10px 10px 80px; }
+  .timeline { margin-left: 4px; padding-left: 14px; }
+  .item::before { left: -21px; }
+  .card { padding: 14px 14px; }
+  .btns { display: grid; grid-template-columns: 1fr auto; }
+  .btn { justify-content: center; }
+  #tips .btns { grid-template-columns: 1fr 1fr; }
+}
+
+/* Desktop: wider, centered, tabs wrap, two-column tips */
+@media (min-width: 900px) {
+  header, .tabs, main { max-width: 980px; }
+  header { padding: 28px 20px 12px; }
+  header h1 { font-size: 32px; }
+  .tabs { flex-wrap: wrap; justify-content: flex-start; padding: 10px 20px; }
+  main { padding: 16px 20px 40px; }
+  .timeline { margin-left: 12px; padding-left: 24px; }
+  .item::before { left: -31px; }
+  .item .card { display: grid; grid-template-columns: 140px 1fr; column-gap: 18px; }
+  .item .card > .time { grid-row: 1 / span 6; padding-top: 2px; }
+  .item .card > *:not(.time) { grid-column: 2; }
+  #tips { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+}
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">SF Trip Planner</p>
+  <h1>🌉 舊金山 4 天行程</h1>
+  <p>Day 1 (Fri) – Day 4 (Mon)・4 人・住 Hotel</p>
+  <div class="sf-clock" id="sfClock"></div>
+</header>
+<nav><div class="tabs" id="tabs"></div></nav>
+<main id="main"></main>
+<footer>點 📍 開 Google Maps・點 🧭 從目前位置導航<br>營業時間以官方 / Google Maps 當天顯示為準</footer>
+<button class="to-top" id="toTop" aria-label="回到頂端">↑</button>
+
+<script>
+const HOTEL = "CQ Hotel Embarcadero, 424 Clay St, San Francisco, CA";
+const P = {
+  sfo: "San Francisco International Airport (SFO)",
+  hotel: HOTEL,
+  sais: "Sai's Vietnamese Restaurant & Bar, 42 Columbus Ave, San Francisco, CA 94111",
+  superduper: "Super Duper Burgers Embarcadero Center San Francisco",
+  ferry: "Ferry Building Marketplace, 1 Ferry Building, San Francisco",
+  market: "Ferry Plaza Farmers Market, San Francisco",
+  explo: "Exploratorium, Pier 15, San Francisco",
+  roliroti: "Roli Roti Ferry Plaza Farmers Market San Francisco",
+  pier39: "Pier 39, San Francisco",
+  wharf: "Fisherman's Wharf, San Francisco",
+  ghirardelli: "Ghirardelli Square, 900 North Point St, San Francisco",
+  ggb: "Golden Gate Bridge Welcome Center, San Francisco",
+  pfa: "Palace of Fine Arts, San Francisco",
+  pacificcatch: "Pacific Catch, 2027 Chestnut St, San Francisco",
+  lombard: "Lombard Street (crooked section), San Francisco",
+  northbeach: "Washington Square Park, North Beach, San Francisco",
+  goldenboy: "Golden Boy Pizza, 542 Green St, San Francisco",
+  sottomare: "Sotto Mare, 552 Green St, San Francisco",
+  redbay: "Red Bay Coffee Ferry Building San Francisco",
+  embarcadero: "Embarcadero Promenade, San Francisco",
+  fishfarm: "Fish & Farm, 424 Clay St, San Francisco",
+  dandelion: "Dandelion Chocolate Ferry Building, San Francisco",
+  recchiuti: "Recchiuti Confections Ferry Building, San Francisco",
+  stonehouse: "Stonehouse California Olive Oil Ferry Building, San Francisco",
+  sfmoma: "SFMOMA, 151 Third St, San Francisco",
+  boudin: "Boudin Bakery Cafe, 160 Jefferson St, San Francisco",
+  innout: "In-N-Out Burger, 333 Jefferson St, San Francisco",
+  fline: "F Market & Wharves streetcar, Embarcadero & Green St, San Francisco",
+};
+const maps = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+const dir = (q, mode) => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(q) + (mode ? "&travelmode=" + mode : "");
+
+const DAYS = [
+ { id:"d1", tab:"Day 1 (Fri)", title:"Day 1 (Fri)｜抵達", sub:"第一天不塞景點",
+   alerts:[{t:"tip", h:"🍜 晚餐 Sai's Vietnamese（42 Columbus Ave）：週一至五 10:00–21:00、週六 11:00–21:00，週日公休。19:00 到店時間充裕。"}],
+   items:[
+   {time:"17:00", title:"✈️ 抵達舊金山 SFO", go:"🚕 Uber → Hotel", note:"到飯店後休息；車程約 30–45 分（週五傍晚易塞）", places:[["Hotel",P.hotel,"driving"]]},
+   {time:"約 18:30", title:"🏨 Check-in｜Hotel", places:[["Hotel",P.hotel]]},
+   {time:"19:00", title:"🍜 晚餐（飯店附近）", food:"Sai's Vietnamese；備選 Super Duper Burgers", note:"Sai's 週五營業到 21:00。招牌推薦：SP4 Bún Riêu 蟹肉番茄湯米線、19T Phở Filet Mignon、春捲。吃完回飯店，不安排夜間散步",
+    places:[["Sai's Vietnamese",P.sais,"walking"],["Super Duper",P.superduper,"walking"]]},
+ ]},
+ { id:"d2", tab:"Day 2 (Sat)", short:"Waterfront＋F-Line", title:"Day 2 (Sat)｜Waterfront＋F-Line 復古街車", sub:"輕鬆版：九曲花街拍完就是白天終點，不排 Cable Car、不排晚上景點",
+   alerts:[{t:"warn", h:"🚕 週六傍晚碼頭人多、Uber 可能加價。晚上不再排景點，晚餐後直接回飯店。"},
+           {t:"tip", h:"🎫 交通付款定案：❌ 不買 One Day Pass ❌ 不預存 Clipper（避免留餘額）💳 F-Line 單次感應信用卡付款 🚕 Ghirardelli → 九曲花街、九曲花街 → 飯店用 Uber 📱 叫 Uber 先在店內操作好再出去"}],
+   route:["🏨 Hotel","🚶 Ferry Building 早餐","🥕 Farmers Market 1.5 hr","🚃 F-Line：Ferry Building 上車","🚃 The Embarcadero & Stockton St 下車","🦭 Pier 39","🦀 Fisherman's Wharf","🥣 Boudin / 🍔 In-N-Out","🚶 10–15 min","🍫 Ghirardelli Square","🚕 5–10 min","🌸 九曲花街下方拍照","🚕 Hotel","🛏️ 休息","🍽️ 晚餐"],
+   items:[
+   {time:"08:00", title:"🏨 Hotel 出發", go:"🚶 步行約 8 分", note:"從飯店步行往 Ferry Building", places:[["Ferry Building",P.ferry,"walking"]]},
+   {time:"08:00–08:30", title:"☕🥐 早餐", food:"精品咖啡 Latte＋可頌 / Pastry", go:"🚶", note:"Ferry Building 內；選項見 🍽️ 餐廳 tab", places:[["Ferry Building",P.ferry,"walking"]]},
+   {time:"08:30–10:00", star:true, title:"🥕 Ferry Plaza Farmers Market", go:"🚶",
+    note:"至少 1.5 小時。週六慢慢逛農產品、烘焙、熟食及特色攤位（08:00–14:00）。",
+    src:[["foodwise.org","https://foodwise.org/markets/ferry-plaza-farmers-market/visitor-info/"]], places:[["Farmers Market",P.market,"walking"]]},
+   {time:"10:00–10:30", star:true, title:"🚃 F-Line Historic Streetcar 復古街車", go:"🚃 單次感應付款",
+    steps:["📍 上車：The Embarcadero & Ferry Building","➡️ 搭往 Fisherman's Wharf 方向","📍 下車：The Embarcadero & Stockton St","🦭 下車就是 Pier 39 / Pier 41 一帶"],
+    places:[["上車站",P.flineFerry,"walking"],["下車站",P.flineStockton,"transit"]]},
+   {time:"10:30–14:15", star:true, title:"🦭 Pier 39＋Fisherman's Wharf 漁人碼頭區", go:"🚶",
+    note:"同一大片觀光區，不切太細。看海獅、逛 Pier 39、海邊商店＋午餐。",
+    places:[["Pier 39",P.pier39,"walking"],["Fisherman's Wharf",P.wharf,"walking"]]},
+   {time:"午餐", star:true, title:"🥣 Boudin Bakery", go:"🚶", note:"經典 Clam Chowder in a Sourdough Bread Bowl 酸種麵包碗巧達蛤蜊濃湯（Bistro 菜單 US$19.45）。160 Jefferson St。",
+    places:[["Boudin",P.boudin,"walking"]]},
+   {time:"午餐備選", title:"🍔 In-N-Out Burger", go:"🚶", note:"333 Jefferson St，也在 Fisherman's Wharf；週六 10:30–01:30，想吃的人可安排。",
+    places:[["In-N-Out",P.innout,"walking"]]},
+   {time:"14:15–14:30", title:"🚶 Fisherman's Wharf → 🍫 Ghirardelli Square", go:"🚶 約 10–15 分鐘",
+    steps:["📍 從 Fisherman's Wharf 出發","🚶 沿 Jefferson St / Waterfront 往西走","📍 到 Ghirardelli Square（900 North Point St）","不需要 Uber"],
+    places:[["Ghirardelli",P.ghirardelli,"walking"]]},
+   {time:"14:30–15:30", star:true, title:"🍫 Ghirardelli Square", food:"Hot Fudge Sundae＋買巧克力", go:"🚶", note:"不用急；4 人可先點 2 份 Sundae 分享", places:[["Ghirardelli",P.ghirardelli,"walking"]]},
+   {time:"15:30–15:40", title:"🚕 Ghirardelli → 🌸 九曲花街", go:"🚕 Uber 約 5–10 分鐘",
+    steps:["📍 從 Ghirardelli Square 叫車（先在店內叫好）","📱 Uber 目的地輸入：Lombard St & Leavenworth St","📍 直接到九曲花街下方"],
+    places:[["Lombard & Leavenworth",P.lombardBottom,"driving"]]},
+   {time:"15:40–16:10", title:"🌸 Lombard Street 九曲花街", go:"🚶", note:"📷 從下方向上拍經典彎道。不爬坡、不搭 Cable Car，拍完即走", places:[["九曲花街下方",P.lombardBottom,"walking"]]},
+   {time:"約 16:10", title:"🚕 九曲花街 → 🏨 Hotel", go:"🚕 Uber 約 10–15 分鐘",
+    steps:["📍 從 Lombard St & Leavenworth St 叫車","📱 Uber 目的地：Hotel（點下方 🧭 導航）","🛏️ 白天觀光正式結束，回飯店休息洗澡"],
+    places:[["Hotel",P.hotel,"driving"]]},
+   {time:"18:00–18:30 後", title:"🍽️ 晚餐", go:"🚶 / 🚕", note:"依體力決定，累的話就在 Hotel 附近吃；選項見 🍽️ 餐廳 tab", places:[["Hotel",P.hotel,"walking"]]},
+   {time:"晚餐後", title:"🏨 Hotel", go:"🚕", note:"晚上不再排景點"},
+ ]},
+ { id:"d3", tab:"Day 3 (Sun)", short:"金門大橋＋SFMOMA", title:"Day 3 (Sun)｜金門大橋＋SFMOMA 🎨", sub:"不再塞 Little Italy",
+   alerts:[{t:"warn", h:"⏰ 早上出門前確認手機／手錶時間一致（美國秋季會切換夏令時間，手機會自動調整）。"},
+           {t:"tip", h:"🌁 金門大橋早上常起霧、風大，帶件外套。SFMOMA 建議先在官網買票。"}],
+   items:[
+   {time:"08:00", title:"☕🥐 早餐", food:"淺焙 Latte＋好吃 Pastry", go:"🚶 飯店附近", places:[["Ferry Building",P.ferry,"walking"]]},
+   {time:"09:00", title:"🚕 出發", go:"🚕 Uber 約 20–25 分", places:[["Golden Gate Bridge",P.ggb,"driving"]]},
+   {time:"09:30–10:45", star:true, title:"🌉 Golden Gate Bridge 金門大橋", note:"拍照、觀景；Uber 下車點設 Welcome Center", places:[["Welcome Center",P.ggb,"driving"]]},
+   {time:"11:00–11:45", title:"🏛️ Palace of Fine Arts 藝術宮", go:"🚕 約 10 分", note:"拍照、湖景", places:[["Palace of Fine Arts",P.pfa,"driving"]]},
+   {time:"12:00–13:00", star:true, title:"🐟 午餐｜Pacific Catch", go:"🚕 或 🚶 約 12 分", note:"2027 Chestnut St；海鮮、poke、tacos，午餐不要吃太撐。",
+    places:[["Pacific Catch",P.pacificcatch,"walking"]]},
+   {time:"13:00–13:30", title:"🚕 前往美術館", go:"🚕 Uber 約 20–25 分", places:[["SFMOMA",P.sfmoma,"driving"]]},
+   {time:"13:30–16:30", star:true, title:"🎨 SFMOMA 舊金山現代藝術博物館", note:"週日 10:00–17:00；美國規模最大的現代與當代藝術博物館之一。",
+    src:[["sfmoma.org/visit","https://www.sfmoma.org/visit/"],["sfmoma.org","https://www.sfmoma.org/"]], places:[["SFMOMA",P.sfmoma,"driving"]]},
+   {time:"16:30", title:"🏨 回 Hotel", go:"🚕 Uber 約 10 分", note:"今天到這裡就好", places:[["Hotel",P.hotel,"driving"]]},
+   {time:"18:00", title:"🍽️ 晚餐｜飯店附近", note:"不再安排大量步行；選項見 🍽️ 餐廳 tab", places:[["Hotel",P.hotel,"walking"]]},
+ ]},
+ { id:"d4", tab:"Day 4 (Mon)", short:"Little Italy＋伴手禮", title:"Day 4 (Mon)｜Little Italy＋伴手禮＋回台灣 🇹🇼", sub:"活動都控制在飯店周邊・23:00 飛台灣",
+   alerts:[{t:"tip", h:"🧳 Check-out 時跟櫃台確認行李寄放到 18:15；護照、充電器放隨身包。週一沒有 Farmers Market。"}],
+   items:[
+   {time:"08:30", title:"☕🥐 早餐｜Red Bay Coffee（Ferry Building）", food:"Latte＋Pastry", go:"🚶", note:"約 07:00–18:00",
+    src:[["redbaycoffee.com","http://redbaycoffee.com/"]], places:[["Red Bay Coffee",P.redbay,"walking"]]},
+   {time:"09:30", title:"🏨 Check-out", note:"行李寄放 Hotel", places:[["Hotel",P.hotel,"walking"]]},
+   {time:"10:00–12:00", star:true, title:"🇮🇹 North Beach / Little Italy", food:"咖啡＋散步", go:"🚕 Uber 來回約 5–8 分", note:"Washington Square 一帶；推薦咖啡見 🍽️ 餐廳 tab",
+    places:[["North Beach",P.northbeach,"driving"]]},
+   {time:"12:00", title:"🚕 回 Waterfront", go:"🚕 Uber", places:[["Ferry Building",P.ferry,"driving"]]},
+   {time:"12:15–13:30", title:"⛴️ Ferry Building 午餐", go:"🚶", note:"吃完直接購物；Building 每日 06:00–22:00，各店家時間不同。",
+    src:[["ferrybuildingmarketplace.com","https://www.ferrybuildingmarketplace.com/visit/"]], places:[["Ferry Building",P.ferry,"walking"]]},
+   {time:"13:30–15:30", star:true, title:"🛍️ Ferry Building 伴手禮採買", go:"🚶 都在 Ferry Building 內", note:"伴手禮集中這時買",
+    shop:[["🍫 Dandelion Chocolate","適合同事、朋友",P.dandelion],["🍫 Recchiuti Confections","比較精緻，適合重要的人",P.recchiuti],["🫒 Stonehouse California Olive Oil","適合喜歡料理的人",P.stonehouse]],
+    places:[["Dandelion",P.dandelion,"walking"],["Recchiuti",P.recchiuti,"walking"],["Stonehouse",P.stonehouse,"walking"]]},
+   {time:"15:30–16:30", title:"🌊 Waterfront", food:"☕ 咖啡＋海邊散步", go:"��", note:"不想休息也可以繼續逛", places:[["Embarcadero",P.embarcadero,"walking"]]},
+   {time:"16:30", title:"🏨 回 Hotel", food:"整理戰利品", note:"把伴手禮直接收進行李", places:[["Hotel",P.hotel,"walking"]]},
+   {time:"17:00–18:15", star:true, title:"🍽️ 最後晚餐｜Fish & Farm", go:"就在飯店", note:"飯店同址，最省力；晚餐 17:00–22:00。",
+    src:[["fishandfarmsf.com","http://www.fishandfarmsf.com/"],["downtownsf.org","https://downtownsf.org/go/fish-and-farm"]], places:[["Fish & Farm",P.fishfarm,"walking"]]},
+   {time:"18:15", title:"🧳 拿行李"},
+   {time:"18:30–19:00", title:"🚕 Uber → SFO", go:"🚕 4 人＋行李叫 UberXL", note:"預留塞車時間", places:[["SFO",P.sfo,"driving"]]},
+   {time:"約 19:30–20:00", title:"✈️ 抵達 SFO 國際線", note:"報到、托運、安檢", places:[["SFO",P.sfo]]},
+   {time:"23:00", star:true, title:"✈️ 飛回台灣 🇹🇼"},
+ ]},
+];
+
+// [name, 類型, 推薦原因, Google Maps query, 是否已在行程中]
+const EATS = [
+ { day:"d1", label:"Day 1 (Fri)", area:"Hotel / Financial District", meals:[
+   {meal:"🌙 晚餐", where:"飯店步行 10 分內", list:[
+     ["Sai's Vietnamese","越南河粉・Est. 1982","原定晚餐；平日 10–21、週六 11–21、週日休。必點 Bún Riêu、Phở Filet Mignon","Sai's Vietnamese Restaurant & Bar, 42 Columbus Ave, San Francisco, CA 94111",true],
+     ["Super Duper Burgers","漢堡・平價","原定備選，快速、不用等","Super Duper Burgers Embarcadero Center San Francisco"],
+     ["Hog Island Oyster Co.","生蠔・海鮮","Ferry Building 內，海景＋生蠔，熱門要排隊","Hog Island Oyster Co Ferry Building San Francisco"],
+     ["Gott's Roadside","漢堡・奶昔","Ferry Building 內，選擇多、適合全家","Gott's Roadside Ferry Building San Francisco"],
+     ["Kokkari Estiatorio","希臘菜・正式","飯店附近口碑名店，想吃好一點可訂位","Kokkari Estiatorio 200 Jackson St San Francisco"],
+     ["Z & Y Restaurant","川菜","中國城名店，想吃中式熱食的選擇","Z & Y Restaurant 655 Jackson St San Francisco"],
+   ]},
+ ]},
+ { day:"d2", label:"Day 2 (Sat)", area:"Ferry Building → Pier 39 / Fisherman's Wharf → 飯店", meals:[
+   {meal:"☀️ 早餐", where:"Ferry Building（市集日）", list:[
+     ["Blue Bottle Coffee","精品咖啡","Ferry Building 內，Latte 穩定","Blue Bottle Coffee Ferry Building San Francisco"],
+     ["Red Bay Coffee","精品咖啡","淺焙風格，Ferry Building 內","Red Bay Coffee Ferry Building San Francisco"],
+     ["Acme Bread","麵包","在地老字號，可頌／酸種","Acme Bread Ferry Building San Francisco"],
+     ["Frog Hollow Farm","水果・Pastry","水果塔、果醬，市集日很適合","Frog Hollow Farm Ferry Building San Francisco"],
+   ]},
+   {meal:"🍱 午餐", where:"Pier 39 / Fisherman's Wharf", list:[
+     ["🥣 Boudin Bakery（旗艦店）","酸種麵包碗巧達湯","160 Jefferson St。招牌 Clam Chowder in a Sourdough Bread Bowl 酸種麵包碗巧達蛤蜊濃湯；Bistro 菜單傳統麵包碗 US$19.45","Boudin Bakery Cafe 160 Jefferson St San Francisco",true],
+     ["🍔 In-N-Out Burger","漢堡・平價","333 Jefferson St，就在 Fisherman's Wharf；週六營業 10:30–01:30","In-N-Out Burger 333 Jefferson St San Francisco",true],
+     ["Fog Harbor Fish House","海鮮","Pier 39 內，海景＋螃蟹","Fog Harbor Fish House Pier 39 San Francisco"],
+     ["Scoma's","海鮮・老字號","Pier 47 經典海鮮餐廳","Scoma's Restaurant Pier 47 San Francisco"],
+   ]},
+   {meal:"🌙 晚餐", where:"飯店附近（看體力）", list:[
+     ["Sai's Vietnamese","越南河粉","42 Columbus Ave，週六 11:00–21:00，飯店步行可到","Sai's Vietnamese Restaurant & Bar, 42 Columbus Ave, San Francisco, CA 94111"],
+     ["Super Duper Burgers","漢堡","快速、不用等","Super Duper Burgers Embarcadero Center San Francisco"],
+     ["Hog Island Oyster Co.","生蠔・海鮮","Ferry Building 內，熱門要排隊","Hog Island Oyster Co Ferry Building San Francisco"],
+     ["Gott's Roadside","漢堡・奶昔","Ferry Building 內，座位多","Gott's Roadside Ferry Building San Francisco"],
+     ["Kokkari Estiatorio","希臘菜・正式","想吃好一點，建議訂位","Kokkari Estiatorio 200 Jackson St San Francisco"],
+   ]},
+ ]},
+ { day:"d3", label:"Day 3 (Sun)", area:"飯店 → 金門大橋 → Marina → SFMOMA → 飯店", meals:[
+   {meal:"☀️ 早餐", where:"飯店附近", list:[
+     ["Blue Bottle Coffee","咖啡","Ferry Building 內，離飯店最近","Blue Bottle Coffee Ferry Building San Francisco"],
+     ["Red Bay Coffee","咖啡","淺焙 Latte","Red Bay Coffee Ferry Building San Francisco"],
+     ["Acme Bread","麵包","可頌、酸種麵包","Acme Bread Ferry Building San Francisco"],
+   ]},
+   {meal:"🍱 午餐", where:"Marina / Chestnut St", list:[
+     ["Pacific Catch","海鮮・Poke","原定午餐，輕食海鮮","Pacific Catch 2027 Chestnut St San Francisco",true],
+     ["A16","義大利・拿坡里披薩","Chestnut St 名店","A16 2355 Chestnut St San Francisco"],
+     ["Blue Barn","沙拉・三明治","吃輕一點","Blue Barn Gourmet Chestnut St San Francisco"],
+     ["Super Duper Burgers","漢堡","Marina 分店，快速","Super Duper Burgers Chestnut St San Francisco"],
+   ]},
+   {meal:"☕ 美術館休息", where:"SFMOMA 館內／旁邊", list:[
+     ["Sightglass Coffee（SFMOMA 館內）","咖啡","逛累了在館內喝杯咖啡","Sightglass Coffee SFMOMA San Francisco"],
+     ["Blue Bottle Coffee（Yerba Buena）","咖啡","SFMOMA 旁步行可到","Blue Bottle Coffee Mint Plaza San Francisco"],
+   ]},
+   {meal:"🌙 晚餐", where:"飯店步行或短程 Uber", list:[
+     ["Kokkari Estiatorio","希臘菜・正式","飯店步行可到，口碑名店，建議訂位","Kokkari Estiatorio 200 Jackson St San Francisco"],
+     ["Wayfare Tavern","美式","金融區人氣餐廳，步行可到","Wayfare Tavern 558 Sacramento St San Francisco"],
+     ["Hog Island Oyster Co.","生蠔・海鮮","Ferry Building 內，海景","Hog Island Oyster Co Ferry Building San Francisco"],
+     ["Sotto Mare","海鮮・Cioppino","想吃 Cioppino 的話，Uber 約 5 分","Sotto Mare 552 Green St San Francisco"],
+     ["Z & Y Restaurant","川菜","中國城，想吃中式熱食","Z & Y Restaurant 655 Jackson St San Francisco"],
+   ]},
+ ]},
+ { day:"d4", label:"Day 4 (Mon)", area:"飯店 → North Beach → Ferry Building", meals:[
+   {meal:"☀️ 早餐", where:"Ferry Building", list:[
+     ["Red Bay Coffee","咖啡","原定早餐，淺焙 Latte","Red Bay Coffee Ferry Building San Francisco",true],
+     ["Blue Bottle Coffee","咖啡","Ferry Building 內","Blue Bottle Coffee Ferry Building San Francisco"],
+     ["Acme Bread","麵包","買可頌配咖啡","Acme Bread Ferry Building San Francisco"],
+   ]},
+   {meal:"☕ 上午 North Beach", where:"Little Italy 咖啡＋點心", list:[
+     ["Caffe Trieste","咖啡・老字號","North Beach 傳奇老咖啡館","Caffe Trieste 601 Vallejo St San Francisco"],
+     ["Réveille Coffee Co.","咖啡","Columbus Ave，Latte 好喝","Reveille Coffee 200 Columbus Ave San Francisco"],
+     ["Golden Boy Pizza","披薩","Clam & Garlic Pizza，約 11:30 開，可買一片分享","Golden Boy Pizza 542 Green St San Francisco"],
+     ["Victoria Pastry","義式甜點","老字號義式糕點","Victoria Pastry 700 Filbert St San Francisco"],
+   ]},
+   {meal:"🍱 午餐", where:"Ferry Building（週一無市集）", list:[
+     ["Hog Island Oyster Co.","生蠔・海鮮","最後一天吃生蠔","Hog Island Oyster Co Ferry Building San Francisco"],
+     ["Gott's Roadside","漢堡・奶昔","快速、座位多","Gott's Roadside Ferry Building San Francisco"],
+     ["Delica","日式熟食","想吃清淡一點","Delica Ferry Building San Francisco"],
+   ]},
+   {meal:"🌙 晚餐", where:"飯店（17:00 吃）", list:[
+     ["Fish & Farm","加州料理","原定晚餐，飯店同址","Fish & Farm 424 Clay St San Francisco",true],
+     ["Kokkari Estiatorio","希臘菜","步行可到，最後一晚吃好一點","Kokkari Estiatorio 200 Jackson St San Francisco"],
+     ["Super Duper Burgers","漢堡","時間太趕時的快速選擇","Super Duper Burgers Embarcadero Center San Francisco"],
+   ]},
+ ]},
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function sfNow() {
+  const f = new Intl.DateTimeFormat("en-CA",{timeZone:"America/Los_Angeles",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false});
+  const p = Object.fromEntries(f.formatToParts(new Date()).map(x=>[x.type,x.value]));
+  return {date:`${p.year}-${p.month}-${p.day}`, mins:(+p.hour%24)*60 + +p.minute, label:`${p.hour}:${p.minute}`};
+}
+const startMins = t => { const m = t.match(/(\d{1,2}):(\d{2})/); return m ? +m[1]*60 + +m[2] : null; };
+
+function render() {
+  const now = sfNow();
+  document.getElementById("sfClock").textContent = `🕒 舊金山現在 ${now.label}`;
+  const tabs = document.getElementById("tabs"), main = document.getElementById("main");
+  tabs.innerHTML = DAYS.map(d => `<button class="tab" data-id="${d.id}"><b>${esc(d.tab)}</b>${esc(d.short || d.title.split("｜")[1] || "")}</button>`).join("")
+    + `<button class="tab" data-id="eats"><b>🍽️ 餐廳</b>每日推薦</button>`
+    + `<button class="tab" data-id="tips"><b>📋 總覽</b>調整重點</button>`;
+  const dayColor = {d1:"#f48fb1", d2:"#90c8f0", d3:"#a5d6a7", d4:"#ffcc99"};
+  const eatsHtml = `<section id="eats" class="day hidden">
+    <div class="card day-head"><h2>🍽️ 每日推薦餐廳</h2><div class="sub">依每天行程位置，挑附近的早餐／午餐／晚餐</div>
+      <div class="jump">${EATS.map(e=>`<a href="#eats-${e.day}" style="--c:${dayColor[e.day]}">${esc(e.label.split("｜")[0])}</a>`).join("")}</div>
+      <div class="alert tip">⭐ = 已排在行程裡；其他是附近備案。營業時間與排隊狀況請以 Google Maps 當天顯示為準。</div></div>
+    ${EATS.map(e=>`<div class="eat-day" id="eats-${e.day}" style="--day-color:${dayColor[e.day]};--n:${e.meals.length}">
+      <div class="eat-day-head"><b>${esc(e.label)}</b><span>${esc(e.area)}</span></div>
+      ${e.meals.map(m=>`<div class="card eat-meal"><div class="eat-meal-head"><b>${esc(m.meal)}</b><span class="chip">📍 ${esc(m.where)}</span></div>
+        <ul class="eat-list">${m.list.map(([n,t,w,q,on])=>`<li class="${on?"on":""}">
+          <div class="eat-info"><a href="${maps(q)}" target="_blank" rel="noopener" class="eat-name">${on?"⭐ ":""}${esc(n)}</a>
+            <span class="eat-type">${esc(t)}</span><span class="eat-why">${esc(w)}</span></div>
+          <div class="eat-btns"><a class="btn primary" href="${maps(q)}" target="_blank" rel="noopener">📍</a><a class="btn" href="${dir(q,"walking")}" target="_blank" rel="noopener">🧭</a></div>
+        </li>`).join("")}</ul></div>`).join("")}
+    </div>`).join("")}
+  </section>`;
+  main.innerHTML = DAYS.map(d => {
+    let nowIdx = -1;
+    return `<section id="${d.id}" class="day hidden">
+      <div class="card day-head"><h2>${esc(d.title)}</h2><div class="sub">${esc(d.sub)}</div>
+        ${(d.alerts||[]).map(a=>`<div class="alert ${a.t==="tip"?"tip":""}">${esc(a.h)}</div>`).join("")}
+        ${d.route?`<details class="route" open><summary>🗺️ 路線一眼看懂</summary><div class="route-list">${d.route.map(x=>`<span>${esc(x)}</span>`).join("")}</div></details>`:""}</div>
+      <div class="timeline">${d.items.map((it,i)=>`
+        <div class="item ${it.star?"star":""} ${i===nowIdx?"now":""}"><div class="card">
+          <div class="time">${esc(it.time)}${i===nowIdx?" ・ 進行中":""}</div>
+          <div class="title">${esc(it.title)}</div>
+          ${(it.food||it.go)?`<div class="meta">${it.food?`<span class="chip">🍽️ ${esc(it.food)}</span>`:""}${it.go?`<span class="chip">${esc(it.go)}</span>`:""}</div>`:""}
+          ${it.shop?`<ul class="shop">${it.shop.map(([n,w,q])=>`<li><a href="${maps(q)}" target="_blank" rel="noopener"><b>${esc(n)}</b></a><span>${esc(w)}</span></li>`).join("")}</ul>`:""}
+          ${it.steps?`<ol class="steps">${it.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`:""}
+          ${it.note?`<div class="note">${esc(it.note)}</div>`:""}
+          ${it.changed?`<div class="changed"><b>建議調整：</b>${esc(it.changed)}</div>`:""}
+          ${it.places?`<div class="btns">${it.places.map(([n,q,m])=>`<a class="btn primary" href="${maps(q)}" target="_blank" rel="noopener">📍 ${esc(n)}</a><a class="btn" href="${dir(q,m)}" target="_blank" rel="noopener">🧭 導航</a>`).join("")}</div>`:""}
+          ${it.src?`<div class="src">來源：${it.src.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>`).join("")}</div>`:""}
+        </div></div>`).join("")}</div></section>`;
+  }).join("") + eatsHtml + `<section id="tips" class="day hidden"><div class="card"><h2 style="margin:0">📋 建議調整重點</h2>
+    <ul class="tips">
+      <li><b>Day 2 輕鬆版</b>：F-Line 單次搭乘到 Pier 39；九曲花街從下方拍，拍完回飯店；晚上不排景點。</li>
+      <li><b>Day 3 時間</b>：出門前確認手機／手錶時間一致。</li>
+      <li><b>Day 3 SFMOMA</b>：週日 10:00–17:00，建議先買票。</li>
+      <li><b>Day 4 Little Italy</b>：Uber 來回，行李已寄放飯店。</li>
+      <li><b>Day 4 去機場</b>：4 人＋行李叫 UberXL；跟櫃台確認行李寄放時間。</li>
+    </ul></div>
+    <div class="card"><h2 style="margin:0 0 6px">🗺️ 所有地點</h2><div class="btns">
+      ${Object.entries({"Hotel":P.hotel,"Ferry Building":P.ferry,"Pier 39":P.pier39,"Fisherman's Wharf":P.wharf,"Ghirardelli":P.ghirardelli,"九曲花街（下方）":P.lombardBottom,"金門大橋":P.ggb,"藝術宮":P.pfa,"Pacific Catch":P.pacificcatch,"SFMOMA":P.sfmoma,"North Beach":P.northbeach,"Fish & Farm":P.fishfarm,"Dandelion":P.dandelion,"Recchiuti":P.recchiuti,"Stonehouse":P.stonehouse,"SFO":P.sfo}).map(([n,q])=>`<a class="btn" href="${maps(q)}" target="_blank" rel="noopener">📍 ${esc(n)}</a>`).join("")}
+    </div></div></section>`;
+
+  const show = id => {
+    document.querySelectorAll(".day").forEach(s => s.classList.toggle("hidden", s.id !== id));
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.id === id));
+    history.replaceState(null, "", "#" + id);
+    window.scrollTo({top:0});
+  };
+  tabs.onclick = e => { const b = e.target.closest(".tab"); if (b) show(b.dataset.id); };
+  main.addEventListener("click", e => { const a = e.target.closest(".jump a"); if (!a) return; e.preventDefault();
+    document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth", block:"start"}); });
+  const hash = location.hash.slice(1);
+  show(document.getElementById(hash) ? hash : "d1");
+  const cur = document.querySelector(".day:not(.hidden) .item.now");
+  if (cur && !hash) cur.scrollIntoView({block:"center"});
+}
+render();
+const tt = document.getElementById("toTop");
+addEventListener("scroll", () => tt.classList.toggle("show", scrollY > 500), {passive:true});
+tt.onclick = () => scrollTo({top:0, behavior:"smooth"});
+</script>
+</body>
+</html>
